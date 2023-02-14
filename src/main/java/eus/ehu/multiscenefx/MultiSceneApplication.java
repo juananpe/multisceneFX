@@ -12,8 +12,9 @@ public class MultiSceneApplication extends Application {
 
 
     private Stage stage;
-    private Scene loginScene;
-    private Scene mainMenuScene;
+    private Scene scene;
+    private Parent loginUI;
+    private Parent mainUI;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -21,20 +22,20 @@ public class MultiSceneApplication extends Application {
         this.stage = stage;
 
         FXMLLoader fxmlLoaderLogin = new FXMLLoader(MultiSceneApplication.class.getResource("login.fxml"));
-        Parent loginUI = fxmlLoaderLogin.load();
+        loginUI = fxmlLoaderLogin.load();
         MultiSceneController loginController = fxmlLoaderLogin.getController();
         loginController.setMain(  this  );
-        loginScene = new Scene( loginUI );
+
 
         // FIXME: this works but should be refactored
         FXMLLoader fxmlLoaderMain = new FXMLLoader(MultiSceneApplication.class.getResource("main-menu.fxml"));
-        Parent mainUI = fxmlLoaderMain.load();
+        mainUI = fxmlLoaderMain.load();
         MainMenuController mainMenuController = fxmlLoaderMain.getController();
         mainMenuController.setMain(  this  );
-        mainMenuScene = new Scene(  mainUI );
 
+        scene = new Scene( loginUI );
         stage.setTitle("Login");
-        stage.setScene( loginScene );
+        stage.setScene( scene );
         stage.show();
     }
 
@@ -42,15 +43,16 @@ public class MultiSceneApplication extends Application {
         launch();
     }
 
-    public void changeScene(String scene) {
-        switch (scene) {
+    public void changeScene(String sceneName) {
+        switch (sceneName) {
             case "Login":
                 stage.setTitle("Login");
-                stage.setScene(loginScene);
+                scene.setRoot(loginUI);
+                // stage.setScene(loginScene);
                 break;
             case "Main Menu":
                 stage.setTitle("Main Menu");
-                stage.setScene(mainMenuScene);
+                scene.setRoot(mainUI);
                 break;
         }
     }
