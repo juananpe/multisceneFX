@@ -1,8 +1,6 @@
 package eus.ehu.multiscenefx;
 
 import eus.ehu.multiscenefx.controllers.FxController;
-import eus.ehu.multiscenefx.controllers.MainMenuController;
-import eus.ehu.multiscenefx.controllers.MultiSceneController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,32 +11,36 @@ import java.io.IOException;
 
 public class MultiSceneApplication extends Application {
 
+    private Window loginWindow;
+    private Window mainMenu;
+
     class Window {
         Parent ui;
         FxController controller;
     }
 
+    private Window load(String fxmlFile) throws IOException {
+        Window window = new Window();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
+        window.ui = fxmlLoader.load();
+        window.controller =  fxmlLoader.getController() ;
+        window.controller.setMain(this);
+        return window;
+    }
+
     private Stage stage;
     private Scene scene;
-    private Parent loginUI;
-    private Parent mainUI;
+
 
     @Override
     public void start(Stage stage) throws IOException {
 
         this.stage = stage;
 
-        FXMLLoader fxmlLoaderLogin = new FXMLLoader(MultiSceneApplication.class.getResource("login.fxml"));
-        loginUI = fxmlLoaderLogin.load();
-        MultiSceneController loginController = fxmlLoaderLogin.getController();
-        loginController.setMain(  this  );
+        loginWindow = load("login.fxml");
+        mainMenu = load("main-menu.fxml");
 
-        FXMLLoader fxmlLoaderMain = new FXMLLoader(MultiSceneApplication.class.getResource("main-menu.fxml"));
-        mainUI = fxmlLoaderMain.load();
-        MainMenuController mainMenuController = fxmlLoaderMain.getController();
-        mainMenuController.setMain(  this  );
-
-        scene = new Scene( loginUI );
+        scene = new Scene( loginWindow.ui );
         stage.setTitle("Login");
         stage.setScene( scene );
         stage.show();
@@ -52,12 +54,11 @@ public class MultiSceneApplication extends Application {
         switch (sceneName) {
             case "Login":
                 stage.setTitle("Login");
-                scene.setRoot(loginUI);
-                // stage.setScene(loginScene);
+                scene.setRoot(loginWindow.ui);
                 break;
             case "Main Menu":
                 stage.setTitle("Main Menu");
-                scene.setRoot(mainUI);
+                scene.setRoot(mainMenu.ui);
                 break;
         }
     }
