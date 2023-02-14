@@ -6,4 +6,6 @@ module eus.ehu.multiscenefx {
 
     opens eus.ehu.multiscenefx to javafx.fxml;
     exports eus.ehu.multiscenefx;
+    exports eus.ehu.multiscenefx.controllers;
+    opens eus.ehu.multiscenefx.controllers to javafx.fxml;
 }

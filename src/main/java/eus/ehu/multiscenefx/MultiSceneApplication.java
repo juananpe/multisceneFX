@@ -1,5 +1,8 @@
 package eus.ehu.multiscenefx;
 
+import eus.ehu.multiscenefx.controllers.FxController;
+import eus.ehu.multiscenefx.controllers.MainMenuController;
+import eus.ehu.multiscenefx.controllers.MultiSceneController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +13,10 @@ import java.io.IOException;
 
 public class MultiSceneApplication extends Application {
 
+    class Window {
+        Parent ui;
+        FxController controller;
+    }
 
     private Stage stage;
     private Scene scene;
@@ -26,8 +33,6 @@ public class MultiSceneApplication extends Application {
         MultiSceneController loginController = fxmlLoaderLogin.getController();
         loginController.setMain(  this  );
 
-
-        // FIXME: this works but should be refactored
         FXMLLoader fxmlLoaderMain = new FXMLLoader(MultiSceneApplication.class.getResource("main-menu.fxml"));
         mainUI = fxmlLoaderMain.load();
         MainMenuController mainMenuController = fxmlLoaderMain.getController();

@@ -1,13 +1,15 @@
-package eus.ehu.multiscenefx;
+package eus.ehu.multiscenefx.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import eus.ehu.multiscenefx.MultiSceneApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class MultiSceneController {
+public class MultiSceneController implements FxController {
 
     @FXML
     private ResourceBundle resources;
